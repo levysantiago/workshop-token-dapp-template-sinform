@@ -19,7 +19,7 @@
     "web-vitals": "^2.1.4"
   },
   "engines": {
-    "node": "16.17.0"
+    "node": ">=16.17.0"
   },
   "scripts": {
     "start": "node src/suppress-source-map-warnings.js && react-scripts start",
