@@ -1,6 +1,6 @@
 (This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app))
 
-# Workshop Criando meu primeiro Token
+# Workshop Criando meu primeiro Token e DApp
 
 Minicurso/Workshop realizado para os alunos de Computação da UESC durante o evento da Sinform (Semana de Informática da UESC). Neste minicurso nós criamos um token e integramos com uma aplicação frontend.
 
