@@ -22,6 +22,6 @@ Então você já pode fazer um clone do seu fork na sua máquina local ou no Git
 
 Rode esses comandos para instalar as dependências da aplicação.
 
-### `npm start` | `yarn`
+### `npm start` | `yarn start`
 
 Rode este comando para iniciar a aplicação. Ela vai iniciar no link `http://localhost:3000/`.
