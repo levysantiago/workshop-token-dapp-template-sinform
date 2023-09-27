@@ -11,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [balance, setBalance] = useState('')
   const [provider, setProvider] = useState<ethers.providers.Web3Provider | undefined>()
-  const [tokenRepository, setTokenRepository] = useState<TokenRepository>()
+  const [tokenRepository, setTokenRepository] = useState<TokenRepository | undefined>()
 
   // Connect wallet to application
   async function connect(): Promise<string[] | undefined> {
@@ -88,7 +88,7 @@ function App() {
       {/* HEADER */}
       <header>
         <Flex gap="3" align="center" direction="column" mb="9">
-          <Text color="blue" size="9">Sinform Token DApp</Text>
+          <Text color="blue" size="9">Sinform/ERBASE Token DApp</Text>
 
           {
             walletAddress ?
@@ -119,18 +119,24 @@ function App() {
         <MintSection
           loading={loading}
           setLoading={setLoading}
+          tokenRepository={tokenRepository}
+          fetchBalance={fetchBalance}
         />
 
         {/* Burn */}
         <BurnSection
           loading={loading}
           setLoading={setLoading}
+          tokenRepository={tokenRepository}
+          fetchBalance={fetchBalance}
         />
 
         {/* Transfer */}
         <TransferSection
           loading={loading}
           setLoading={setLoading}
+          tokenRepository={tokenRepository}
+          fetchBalance={fetchBalance}
         />
       </Flex >
     </Box>

@@ -2,15 +2,33 @@ import { Button, Flex, Text } from "@radix-ui/themes"
 import { useState } from "react"
 import { InputText } from "../components/InputText"
 import { InputNumber } from "../components/InputNumber"
+import TokenRepository from "../repositories/tokenRepository"
 
 interface ITransferProps {
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  tokenRepository: TokenRepository | undefined
+  fetchBalance: () => Promise<void>
 }
 
-export function TransferSection({ loading, setLoading, }: ITransferProps) {
+export function TransferSection({ loading, setLoading, tokenRepository, fetchBalance }: ITransferProps) {
   const [transferAmount, setTransferAmount] = useState("")
   const [transferAddress, setTransferAddress] = useState("")
+
+  async function handleTransferSubmit() {
+    try {
+      setLoading(true)
+      const trx = await tokenRepository?.transfer(transferAddress, transferAmount)
+      await trx?.wait()
+      setTransferAddress("")
+      setTransferAmount("")
+      await fetchBalance()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <section id="#transfer">
@@ -36,6 +54,7 @@ export function TransferSection({ loading, setLoading, }: ITransferProps) {
             size="3"
             color="blue"
             style={{ cursor: "pointer" }}
+            onClick={handleTransferSubmit}
           >
             {loading ? "..." : "Transfer"}
           </Button>

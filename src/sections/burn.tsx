@@ -1,14 +1,31 @@
 import { useState } from "react"
 import { Button, Flex, Text } from "@radix-ui/themes"
 import { InputNumber } from "../components/InputNumber"
+import TokenRepository from "../repositories/tokenRepository"
 
 interface IBurnProps {
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  tokenRepository: TokenRepository | undefined
+  fetchBalance: () => Promise<void>
 }
 
-export function BurnSection({ loading, setLoading, }: IBurnProps) {
+export function BurnSection({ loading, setLoading, tokenRepository, fetchBalance }: IBurnProps) {
   const [burnAmount, setBurnAmount] = useState("")
+
+  async function handleBurnSubmit() {
+    try {
+      setLoading(true)
+      const trx = await tokenRepository?.burn(burnAmount)
+      await trx?.wait()
+      setBurnAmount("")
+      await fetchBalance()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <section id="#burn">
@@ -25,6 +42,7 @@ export function BurnSection({ loading, setLoading, }: IBurnProps) {
             size="3"
             color="red"
             style={{ cursor: "pointer" }}
+            onClick={handleBurnSubmit}
           >
             {loading ? "..." : "Burn"}
           </Button>
